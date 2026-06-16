@@ -1,0 +1,628 @@
+ <style>
+      :root {
+        --bg-dark: #0f172a;
+        --card-bg: #ffffff;
+        --accent: #2563eb;
+        --accent-hover: #1d4ed8;
+        --btn-clear: #ef4444;
+        --btn-clear-hover: #dc2626;
+        --btn-print: #0ea5e9;
+        --btn-print-hover: #0284c7;
+        --text-main: #334155;
+        --text-light: #64748b;
+        --border: #cbd5e1;
+        --canvas-bg: #f8fafc;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: var(--bg-dark);
+        color: var(--text-main);
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .workspace {
+        width: 100%;
+        max-width: 1280px;
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+      }
+
+      header {
+        background: #1e293b;
+        padding: 20px 30px;
+        border-bottom: 4px solid var(--accent);
+        color: #ffffff;
+      }
+
+      .header-text h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: #ffff00;
+      }
+
+      .header-text h4 {
+        font-size: 0.95rem;
+        color: #e2e8f0;
+        margin-top: 4px;
+        font-weight: 400;
+      }
+
+      .designer-marquee {
+        margin-top: 8px;
+        color: #94a3b8;
+        font-size: 0.8rem;
+      }
+
+      .main-layout {
+        display: flex;
+        flex-direction: row;
+        min-height: 650px;
+      }
+
+      .control-panel {
+        width: 380px;
+        background: #f1f5f9;
+        padding: 25px;
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        overflow-y: auto;
+        max-height: 820px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      .form-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .form-row .form-group {
+        flex: 1;
+      }
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--text-main);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      select,
+      input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.9rem;
+        background: #fff;
+        color: var(--text-main);
+        transition: all 0.15s ease;
+      }
+
+      select:focus,
+      input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .dynamic-group {
+        display: none;
+        flex-direction: column;
+        gap: 14px;
+        padding: 12px 0;
+        border-top: 1px dashed var(--border);
+        border-bottom: 1px dashed var(--border);
+      }
+
+      .section-divider {
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 4px;
+      }
+
+      .btn-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 15px;
+      }
+
+      .btn-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      button {
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .btn-generate {
+        flex: 2;
+        background: var(--accent);
+        color: white;
+        box-shadow: 0 4px 6px rgba(37, 99, 235, 0.15);
+      }
+
+      .btn-generate:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-clear {
+        flex: 1;
+        background: var(--btn-clear);
+        color: white;
+      }
+
+      .btn-clear:hover {
+        background: var(--btn-clear-hover);
+      }
+
+      .btn-print {
+        width: 100%;
+        background: var(--btn-print);
+        color: white;
+        box-shadow: 0 4px 6px rgba(14, 165, 233, 0.15);
+      }
+
+      .btn-print:hover {
+        background: #0284c7;
+      }
+
+      .viewport-container {
+        flex: 1;
+        padding: 25px;
+        background: var(--canvas-bg);
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto;
+        max-height: 820px;
+      }
+
+      .viewport {
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      svg {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .report-card {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .report-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 14px;
+        border-bottom: 2px solid var(--accent);
+        padding-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .meta-screen-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+
+      .meta-block {
+        background: #f8fafc;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
+      }
+
+      .meta-block label {
+        display: block;
+        font-size: 0.7rem;
+        color: var(--text-light);
+        margin-bottom: 4px;
+      }
+
+      .meta-block span {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .report-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+
+      .report-item {
+        background: #f8fafc;
+        padding: 14px;
+        border-radius: 6px;
+        border-left: 4px solid var(--text-light);
+        font-size: 0.88rem;
+      }
+
+      .report-item strong {
+        display: block;
+        color: var(--text-light);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        letter-spacing: 0.3px;
+      }
+
+      .report-item ul {
+        padding-left: 16px;
+        color: #0f172a;
+      }
+
+      .report-item li {
+        margin-bottom: 4px;
+      }
+
+      .shape-note {
+        font-size: 11px;
+        color: #64748b;
+        font-style: italic;
+        line-height: 1.4;
+      }
+
+      /* CUSTOM SITE MODAL OVERLAY RULES */
+      .site-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.75);
+        z-index: 9999;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .site-modal-content {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 24px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        border-top: 4px solid var(--btn-clear);
+        animation: modalScale 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      @keyframes modalScale {
+        from {
+          transform: scale(0.95);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .site-modal-header {
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: #1e293b;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+      }
+
+      .site-modal-body {
+        font-size: 0.95rem;
+        color: #475569;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+
+      .site-modal-btn {
+        background: #1e293b;
+        color: #ffffff;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        border: none;
+        float: right;
+      }
+
+      #print-info-table {
+        display: none;
+      }
+
+      /* ==========================================================================
+         A4 LANDSCAPE SYSTEM PRINTER RULES 
+         ========================================================================== */
+      @media print {
+        @page {
+          size: A4 landscape;
+          margin: 10mm 15mm 10mm 15mm;
+        }
+
+        html,
+        body {
+          background: #ffffff !important;
+          color: #0f172a !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          display: block !important;
+          overflow: visible !important;
+          height: auto !important;
+        }
+
+        .control-panel,
+        .meta-screen-grid,
+        header,
+        .designer-marquee marquee,
+        .site-modal-overlay {
+          display: none !important;
+        }
+
+        .workspace,
+        .main-layout,
+        .viewport-container {
+          display: block !important;
+          box-shadow: none !important;
+          border-radius: 0 !important;
+          width: 100% !important;
+          background: transparent !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          height: auto !important;
+          max-height: none !important;
+        }
+
+        /* ==================================================
+     PAGE 1 : DRAWING + COMPANY DETAILS ONLY
+     ================================================== */
+
+        #drawing-page {
+          page-break-inside: avoid !important;
+          page-break-after: always !important;
+          break-after: page !important;
+
+          width: 100% !important;
+          height: 175mm !important;
+
+          display: flex !important;
+          flex-direction: column !important;
+          justify-content: flex-start !important;
+
+          margin: 0 !important;
+          padding: 0 !important;
+
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+        .viewport {
+          border: 1px solid #94a3b8 !important;
+          box-shadow: none !important;
+          padding: 8px !important;
+
+          width: 100% !important;
+
+          margin-left: 0 !important;
+          margin-right: auto !important;
+          margin-bottom: 10px !important;
+
+          background: #ffffff !important;
+
+          flex: 1 1 auto !important;
+
+          min-height: 120mm !important;
+          max-height: 120mm !important;
+
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
+
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+        .viewport svg {
+          width: 100% !important;
+          height: 100% !important;
+
+          max-width: 100% !important;
+          max-height: 100% !important;
+
+          display: block !important;
+        }
+
+        #company-details-block {
+          display: block !important;
+
+          border: 2px solid #0f172a !important;
+          background: #ffffff !important;
+
+          padding: 0 !important;
+          width: 100% !important;
+
+          margin-top: 0 !important;
+
+          flex-shrink: 0 !important;
+
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+
+          overflow: hidden !important;
+        }
+
+        #company-details-block .report-title {
+          background: #1e293b !important;
+          color: #ffffff !important;
+
+          margin: 0 !important;
+          padding: 5px 8px !important;
+
+          font-size: 11px !important;
+          font-weight: 700 !important;
+          text-transform: uppercase !important;
+
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+
+        #print-info-table {
+          display: block !important;
+          width: 100% !important;
+        }
+
+        #print-info-table table {
+          width: 100% !important;
+          border-collapse: collapse !important;
+          font-size: 10px !important;
+        }
+
+        #print-info-table th,
+        #print-info-table td {
+          border: 1px solid #0f172a !important;
+          padding: 4px 6px !important;
+          text-align: left !important;
+        }
+
+        #print-info-table th {
+          background: #f1f5f9 !important;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+
+          font-weight: 700 !important;
+          width: 20% !important;
+        }
+
+        #print-info-table td {
+          width: 30% !important;
+          font-weight: 600 !important;
+        }
+
+        /* ==================================================
+     PAGE 2 : PRODUCT SPECIFICATIONS ONLY
+     ================================================== */
+
+        #specification-page {
+          page-break-before: always !important;
+          break-before: page !important;
+
+          page-break-after: avoid !important;
+          break-after: avoid !important;
+
+          width: 100% !important;
+          min-height: 175mm !important;
+
+          border: none !important;
+
+          padding: 0 !important;
+          margin: 0 !important;
+
+          background: transparent !important;
+
+          overflow: hidden !important;
+          box-sizing: border-box !important;
+        }
+
+        #specification-page .report-title {
+          font-size: 1.25rem !important;
+
+          margin-top: 0 !important;
+          margin-bottom: 15px !important;
+
+          color: #0f172a !important;
+
+          border-bottom: 2px solid #0f172a !important;
+          padding-bottom: 4px !important;
+        }
+
+        .report-grid {
+          display: block !important;
+          width: 100% !important;
+        }
+
+        .report-item {
+          background: transparent !important;
+
+          border-left: none !important;
+          border-bottom: 1px solid #cbd5e1 !important;
+
+          padding: 8px 0 !important;
+          margin-bottom: 6px !important;
+
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+
+        .report-item strong {
+          color: #0f172a !important;
+          font-size: 0.95rem !important;
+          font-weight: 700 !important;
+          margin-bottom: 4px !important;
+        }
+
+        .report-item ul {
+          padding-left: 20px !important;
+        }
+
+        .report-item li {
+          font-size: 0.9rem !important;
+          color: #334155 !important;
+          margin-bottom: 3px !important;
+          list-style-type: disc !important;
+        }
+      }
+    </style>
