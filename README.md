@@ -49,23 +49,23 @@ This automation workspace parses multi-variable structural inputs to render stan
 
 ## 🚀 Cross-Industry Application Design (Open for Freelance)
 
+## 🚀 Cross-Industry Application Design (Open for Freelance)
+
 > ### 📢 Attention Recruiters & Prospective Clients
 > I am a **Software Engineering Student & Independent Developer** specializing in building lightweight, hyper-functional, automated business tools. 
 > 
-> This structural steel project demonstrates my ability to map complex real-world logic into clean user interfaces. **I can rapidly adapt this architecture to build automated software for your specific domain:**
+> This structural steel project demonstrates my ability to map complex, variable real-world logic into clean, browser-isolated user interfaces. **I can rapidly adapt this web application framework to build custom automation software for your specific domain:**
 
-| Industry | What I Can Build For You |
+| Industry | Web Application Adaptation (What I Can Build For You) |
 | :--- | :--- |
-| **Logistics & Supply Chain** | Custom automated packaging calculators, manifest generation tools, routing visualizers. |
-| **E-Commerce & Retail** | Interactive dynamic product configurators, inventory tracking matrices, smart invoice systems. |
-| **Real Estate & Construction** | Automated estimation engines, client-facing quote generators, parametric floorplan sketches. |
-| **Finance & Business Ops** | Lightweight dashboard metrics, automated report formatters, internal utility toolchains. |
+| **Logistics & Supply Chain** | Custom web-based packaging layout calculators, manifest automation engines, and interactive routing visualizers. |
+| **E-Commerce & Retail** | Dynamic, client-side product configurators, interactive inventory tracking matrices, and smart invoice generator web apps. |
+| **Real Estate & Construction** | Automated material estimation engines, client-facing quote dashboards, and responsive parametric floorplan preview tools. |
 
 ### Why work with me?
 * **Lightweight First:** I prioritize high-performance, vanilla web tech that runs smoothly on any machine without heavy backend costs.
 * **Rapid Deployment:** Clean, scannable code structures designed for fast turnarounds.
 * **Custom Fit:** I design software tailored to your specific business rules, scaling from basic utilities to interactive automation.
-
 ---
 
 ## 📁 Repository Directory Matrix
