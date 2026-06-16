@@ -9,7 +9,7 @@ Built on a **Zero-Footprint Desktop & Web Pipeline** with absolutely zero depend
 An automated, blueprint-grade drafting engine built entirely on a lightweight web matrix. This application bypasses heavy, legacy CAD software to instantly generate precise, scalable 2D steel structural diagrams directly inside the browser or via a standalone desktop pipeline.
 
 ### 🌐 Live Deployments
-* **Live Web App:** Run the engine instantly via [Google sites]((https://sites.google.com/view/blueprint-suite/home))
+* **Live Web App:** Run the engine instantly via [Google sites](https://sites.google.com/view/blueprint-suite/home)
 * **Desktop Core:** Download the compiled offline executable binary from [Latest Releases](https://github.com/Naresh-KP/Steel-Engineering-2D-Diagram-Automation-/releases)
 
 ---
